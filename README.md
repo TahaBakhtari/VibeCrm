@@ -49,7 +49,7 @@ Create a file named `tg_keys.py` in the same directory with the following struct
 ```python
 def get_api_keys():
     return [
-        "bot_token",      # Your Telegram bot token
+        "app_name",      # Your app name
         12345678,         # Your Telegram API ID
         "your_api_hash"   # Your Telegram API hash
     ]
