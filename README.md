@@ -60,7 +60,6 @@ To get Telegram API credentials:
 2. Log in with your phone number
 3. Go to "API Development tools"
 4. Create a new application to get API ID and API hash
-5. Create a bot via @BotFather on Telegram to get the bot token
 
 ### 2. File Structure
 
