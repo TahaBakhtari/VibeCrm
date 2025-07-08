@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Reports Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Reports & Analytics</h1>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                Sales Reports
+            </div>
+            <div class="card-body">
+                <p>View total sales for any time period with filtering options.</p>
+                <div class="d-grid">
+                    <a href="/reports/total-sales" class="btn btn-primary">Total Sales Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                Customer Analysis
+            </div>
+            <div class="card-body">
+                <p>View detailed sales breakdowns by customer for any time period.</p>
+                <div class="d-grid">
+                    <a href="/reports/sales-by-customer" class="btn btn-primary">Sales by Customer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                Product Analysis
+            </div>
+            <div class="card-body">
+                <p>View detailed sales breakdowns by product for any time period.</p>
+                <div class="d-grid">
+                    <a href="/reports/sales-by-item" class="btn btn-primary">Sales by Item</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                Sales Trends
+            </div>
+            <div class="card-body">
+                <p>Analyze sales trends by day, week, or month to identify patterns.</p>
+                <div class="d-grid">
+                    <a href="/reports/trend-analysis" class="btn btn-primary">Sales Trend Analysis</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                Top Performers
+            </div>
+            <div class="card-body">
+                <p>Identify your best customers and best-selling products.</p>
+                <div class="d-grid">
+                    <a href="/reports/top-performers" class="btn btn-primary">Top Performers Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <p><strong>Note:</strong> The CRM system has a simulated date of May 2025 for testing purposes. All reports with date-based filtering will use this reference date unless you select the "Use Real Date" option when generating a report.</p>
+</div>
+{% endblock %} 

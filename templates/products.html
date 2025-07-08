@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}مدیریت محصولات{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">محصولات</h1>
+        <p class="text-muted">مدیریت محصولات و موجودی انبار</p>
+    </div>
+    <div>
+        <a href="/products/add" class="btn btn-primary me-2">
+            <i class="bi bi-plus-lg"></i> افزودن محصول
+        </a>
+        <a href="/products/search" class="btn btn-outline-primary">
+            <i class="bi bi-search"></i> جستجوی پیشرفته
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="bi bi-box-seam-fill text-primary me-2"></i>
+            لیست محصولات
+        </h5>
+        <div class="d-flex gap-2">
+            <div class="input-group">
+                <span class="input-group-text bg-dark border-0">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" class="form-control search-input" placeholder="جستجوی سریع...">
+            </div>
+            <button class="btn btn-outline-primary btn-icon" title="تازه‌سازی">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        {% if products %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>شناسه</th>
+                        <th>نام محصول</th>
+                        <th>دسته‌بندی</th>
+                        <th>قیمت</th>
+                        <th>موجودی</th>
+                        <th>توضیحات</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>
+                                <span class="badge badge-info">{{ product.id }}</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar-initial bg-warning rounded-circle me-2">
+                                        <i class="bi bi-box-seam-fill"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold">{{ product.name }}</div>
+                                        <small class="text-muted">کد: PRD-{{ product.id }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-tag-fill text-primary me-2"></i>
+                                    {{ product.category }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-currency-dollar text-success me-2"></i>
+                                    {{ "{:,.0f}".format(product.price|parse_price) }} تومان
+                                </div>
+                            </td>
+                            <td>
+                                {% if product.quantity %}
+                                    {% if product.quantity|parse_quantity > 10 %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                            <span>{{ product.quantity }} عدد</span>
+                                        </div>
+                                    {% elif product.quantity|parse_quantity > 0 %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-exclamation-circle-fill text-warning me-2"></i>
+                                            <span>{{ product.quantity }} عدد</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-x-circle-fill text-danger me-2"></i>
+                                            <span>ناموجود</span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-x-circle-fill text-danger me-2"></i>
+                                        <span>ناموجود</span>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.description %}
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-info-circle-fill text-info me-2"></i>
+                                    {{ product.description }}
+                                </div>
+                                {% else %}
+                                <span class="text-muted">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="/products/edit/{{ product.id }}" class="btn btn-warning btn-icon" title="ویرایش">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="/products/delete/{{ product.id }}" class="btn btn-danger btn-icon" 
+                                       onclick="return confirm('آیا از حذف این محصول اطمینان دارید؟')" title="حذف">
+                                        <i class="bi bi-trash3"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="bi bi-box-seam"></i>
+            <h4>هیچ محصولی ثبت نشده است</h4>
+            <p>برای شروع، یک محصول جدید اضافه کنید</p>
+            <a href="/products/add" class="btn btn-primary">
+                <i class="bi bi-plus-lg"></i> افزودن محصول
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .avatar-initial {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 500;
+    }
+    
+    .search-input {
+        background-color: var(--bg-dark);
+        border-color: var(--border-color);
+        color: var(--text-light);
+        border-right: none;
+    }
+    
+    .search-input:focus {
+        background-color: var(--bg-dark);
+        border-color: var(--border-color);
+        color: var(--text-light);
+        box-shadow: none;
+    }
+    
+    .input-group-text {
+        border-left: none;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Quick search functionality
+    const searchInput = document.querySelector('.search-input');
+    const tableRows = document.querySelectorAll('tbody tr');
+    
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        tableRows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(searchTerm) ? '' : 'none';
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Add Sale{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Add New Sale
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="item" class="form-label">Item/Product *</label>
+                        <select class="form-select" id="item" name="item" required>
+                            <option value="">Select a product</option>
+                            {% for product in products %}
+                                <option value="{{ product.name }}">{{ product.name }} - ${{ product.price }}</option>
+                            {% endfor %}
+                            <option value="custom">Other (enter manually)</option>
+                        </select>
+                        <input type="text" class="form-control mt-2" id="custom_item" name="custom_item" placeholder="Enter custom item name" style="display: none;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price *</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="0.00" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="customer" class="form-label">Customer *</label>
+                        <select class="form-select" id="customer" name="customer" required>
+                            <option value="">Select a customer</option>
+                            {% for customer in customers %}
+                                <option value="{{ customer.name }}">{{ customer.name }}</option>
+                            {% endfor %}
+                            <option value="custom">Other (enter manually)</option>
+                        </select>
+                        <input type="text" class="form-control mt-2" id="custom_customer" name="custom_customer" placeholder="Enter custom customer name" style="display: none;">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="sale_date" class="form-label">Sale Date *</label>
+                        <input type="date" class="form-control" id="sale_date" name="sale_date" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Additional information about the sale"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/sales" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Sale</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set default date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('sale_date').value = today;
+        
+        // Handle custom item selection
+        const itemSelect = document.getElementById('item');
+        const customItemInput = document.getElementById('custom_item');
+        
+        itemSelect.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customItemInput.style.display = 'block';
+                customItemInput.setAttribute('required', 'required');
+            } else {
+                customItemInput.style.display = 'none';
+                customItemInput.removeAttribute('required');
+            }
+        });
+        
+        // Handle custom customer selection
+        const customerSelect = document.getElementById('customer');
+        const customCustomerInput = document.getElementById('custom_customer');
+        
+        customerSelect.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customCustomerInput.style.display = 'block';
+                customCustomerInput.setAttribute('required', 'required');
+            } else {
+                customCustomerInput.style.display = 'none';
+                customCustomerInput.removeAttribute('required');
+            }
+        });
+        
+        // Update item price when product is selected
+        itemSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const priceInput = document.getElementById('price');
+            
+            if (this.value !== '' && this.value !== 'custom') {
+                // Extract price from option text (format: "Product Name - $10.00")
+                const priceMatch = selectedOption.text.match(/\$([0-9.]+)/);
+                if (priceMatch && priceMatch[1]) {
+                    priceInput.value = priceMatch[1];
+                }
+            }
+        });
+        
+        // Handle form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            if (itemSelect.value === 'custom') {
+                // Replace the selected value with the custom input
+                itemSelect.value = customItemInput.value;
+            }
+            
+            if (customerSelect.value === 'custom') {
+                // Replace the selected value with the custom input
+                customerSelect.value = customCustomerInput.value;
+            }
+        });
+    });
+</script>
+{% endblock %} 

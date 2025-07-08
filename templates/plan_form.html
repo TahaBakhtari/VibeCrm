@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Add Plan{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Add New Plan or Meeting
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title *</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Meeting, Call, Appointment, etc." required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="with_who" class="form-label">With Whom *</label>
+                        <input type="text" class="form-control" id="with_who" name="with_who" placeholder="Person or company name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="What is this about?">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="plan_time" class="form-label">When *</label>
+                        <input type="text" class="form-control" id="plan_time" name="plan_time" placeholder="YYYY-MM-DD HH:MM or any date format" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Any additional information"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/plans" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Plan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Customer{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                Edit Customer: {{ customer.name }}
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="field" class="form-label">Field to Update</label>
+                        <select class="form-select" id="field" name="field" required>
+                            <option value="name">Name</option>
+                            <option value="phone">Phone</option>
+                            <option value="email">Email</option>
+                            <option value="address">Address</option>
+                            <option value="extra_info">Additional Notes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="value" class="form-label">New Value</label>
+                        <textarea class="form-control" id="value" name="value" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5>Current Values:</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ customer.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ customer.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ customer.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Address</th>
+                                <td>{{ customer.address }}</td>
+                            </tr>
+                            <tr>
+                                <th>Additional Notes</th>
+                                <td>{{ customer.extra_info }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/customers" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Customer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Auto-populate the value field with current data when field changes
+    document.getElementById('field').addEventListener('change', function() {
+        const field = this.value;
+        let currentValue = '';
+        
+        switch(field) {
+            case 'name':
+                currentValue = '{{ customer.name }}';
+                break;
+            case 'phone':
+                currentValue = '{{ customer.phone }}';
+                break;
+            case 'email':
+                currentValue = '{{ customer.email }}';
+                break;
+            case 'address':
+                currentValue = '{{ customer.address }}';
+                break;
+            case 'extra_info':
+                currentValue = '{{ customer.extra_info }}';
+                break;
+        }
+        
+        document.getElementById('value').value = currentValue;
+    });
+    
+    // Trigger the change event on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('field').dispatchEvent(new Event('change'));
+    });
+</script>
+{% endblock %}
+{% endblock %} 

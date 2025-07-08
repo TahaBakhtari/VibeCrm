@@ -1,0 +1,42 @@
+[
+  {
+    "item": "smartphone X200",
+    "price": "350",
+    "customer": "Niloofar Bahrami",
+    "sale_date": "2025-05-27",
+    "notes": "Requested fast delivery",
+    "created_at": "2025-05-27T10:15:22.123456"
+  },
+  {
+    "item": "wireless headphones Z1",
+    "price": "120",
+    "customer": "Parsa Tehrani",
+    "sale_date": "2025-05-28",
+    "notes": "Gift wrap requested",
+    "created_at": "2025-05-28T13:45:10.654321"
+  },
+  {
+    "item": "tablet T10",
+    "price": "250",
+    "customer": "Mahsa Azimi",
+    "sale_date": "2025-05-29",
+    "notes": "Interested in accessories",
+    "created_at": "2025-05-29T09:30:55.789012"
+  },
+  {
+    "item": "laptop model V456",
+    "price": "500",
+    "customer": "Kaveh Tehranian",
+    "sale_date": "2025-05-30",
+    "notes": "Repeat customer, apply discount",
+    "created_at": "2025-05-30T16:20:33.456789"
+  },
+  {
+    "item": "smartwatch S5",
+    "price": "180",
+    "customer": "Arash Etemadi",
+    "sale_date": "2025-05-26",
+    "notes": "First time buyer, follow up in 1 week",
+    "created_at": "2025-05-26T11:05:44.321098"
+  }
+]

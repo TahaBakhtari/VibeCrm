@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Arash Etemadi",
+    "phone": "09124445566",
+    "email": "arash.etemadi@gmail.com",
+    "address": "Rasht, Golsar",
+    "extra_info": "first time buyer",
+    "created_at": "2025-05-26T16:20:05.345678"
+  },
+  {
+    "name": "Niloofar Bahrami",
+    "phone": "09221113344",
+    "email": "niloofar.bahrami@yahoo.com",
+    "address": "Ahvaz, Kianpars",
+    "extra_info": "referred by Ali",
+    "created_at": "2025-05-27T18:15:55.987654"
+  },
+  {
+    "name": "Parsa Tehrani",
+    "phone": "09120001122",
+    "email": "parsa.tehrani@gmail.com",
+    "address": "Tehran, Jordan St.",
+    "extra_info": "requested callback",
+    "created_at": "2025-05-28T12:10:00.111111"
+  },
+  {
+    "name": "Mahsa Azimi",
+    "phone": "09350002233",
+    "email": "mahsa.azimi@outlook.com",
+    "address": "Tehran, Enghelab Sq.",
+    "extra_info": "interested in new products",
+    "created_at": "2025-05-29T15:25:30.222222"
+  },
+  {
+    "name": "Kaveh Tehranian",
+    "phone": "09123334455",
+    "email": "kaveh.tehranian@yahoo.com",
+    "address": "Tehran, Saadat Abad",
+    "extra_info": "wants newsletter",
+    "created_at": "2025-05-30T17:45:15.333333"
+  }
+]

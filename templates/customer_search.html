@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}جستجوی مشتری{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                جستجوی مشتری
+            </div>
+            <div class="card-body">
+                <form method="post" class="mb-4">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="query" class="form-label">عبارت جستجو</label>
+                                <input type="text" class="form-control" id="query" name="query" required>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label for="dimension" class="form-label">جستجو در</label>
+                                <select class="form-select" id="dimension" name="dimension">
+                                    <option value="">همه موارد</option>
+                                    <option value="name">نام</option>
+                                    <option value="phone">تلفن</option>
+                                    <option value="email">ایمیل</option>
+                                    <option value="address">آدرس</option>
+                                    <option value="extra_info">اطلاعات تکمیلی</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">جستجو</button>
+                        </div>
+                    </div>
+                </form>
+                
+                {% if results %}
+                <h5>نتایج جستجو:</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>شناسه</th>
+                                <th>نام</th>
+                                <th>تلفن</th>
+                                <th>ایمیل</th>
+                                <th>آدرس</th>
+                                <th>یادداشت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in results %}
+                                <tr>
+                                    <td>{{ customer.id }}</td>
+                                    <td>{{ customer.name }}</td>
+                                    <td>{{ customer.phone }}</td>
+                                    <td>{{ customer.email }}</td>
+                                    <td>{{ customer.address }}</td>
+                                    <td>{{ customer.extra_info }}</td>
+                                    <td>
+                                        <a href="/customers/edit/{{ customer.id }}" class="btn btn-sm btn-warning">ویرایش</a>
+                                        <a href="/customers/delete/{{ customer.id }}" class="btn btn-sm btn-danger" 
+                                           onclick="return confirm('آیا از حذف این مشتری اطمینان دارید؟')">حذف</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        برای شروع جستجو، عبارت مورد نظر خود را وارد کنید.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

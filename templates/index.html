@@ -1,0 +1,388 @@
+{% extends "base.html" %}
+
+{% block title %}داشبورد CRM{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">داشبورد <span class="text-muted fs-6">نمای کلی کسب و کار شما</span></h1>
+
+<div class="row dashboard-stats">
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 border-right-primary">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2>{{ customers_count }}</h2>
+                        <p>مشتریان</p>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-people-fill text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+                <a href="/customers" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 border-right-success">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2>{{ plans_count }}</h2>
+                        <p>برنامه‌ها</p>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-calendar-check-fill text-success" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+                <a href="/plans" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 border-right-info">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2>{{ sales_count }}</h2>
+                        <p>فروش‌ها</p>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-cart-check-fill text-info" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+                <a href="/sales" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-4">
+        <div class="card h-100 border-right-warning">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h2>{{ products_count }}</h2>
+                        <p>محصولات</p>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-box-seam-fill text-warning" style="font-size: 2.5rem;"></i>
+                    </div>
+                </div>
+                <a href="/products" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-graph-up me-2"></i>نمای کلی فروش</h5>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-primary active" id="weekly-toggle">هفتگی</button>
+                    <button type="button" class="btn btn-outline-primary" id="monthly-toggle">ماهانه</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-pie-chart-fill me-2"></i>توزیع فروش</h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container mb-3">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+                <div class="text-center">
+                    <span class="d-inline-block me-3"><i class="bi bi-circle-fill text-primary me-1"></i> محصولات</span>
+                    <span class="d-inline-block me-3"><i class="bi bi-circle-fill text-success me-1"></i> خدمات</span>
+                    <span class="d-inline-block"><i class="bi bi-circle-fill text-warning me-1"></i> سایر</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning-charge-fill me-2"></i>عملیات سریع</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <a href="/customers/add" class="btn btn-primary w-100 p-3 d-flex align-items-center">
+                            <i class="bi bi-person-plus fs-4 me-3"></i>
+                            <div class="text-start">
+                                <div class="fw-bold">افزودن مشتری</div>
+                                <small class="text-light-50">ثبت مشتری جدید</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/plans/add" class="btn btn-success w-100 p-3 d-flex align-items-center">
+                            <i class="bi bi-calendar-plus fs-4 me-3"></i>
+                            <div class="text-start">
+                                <div class="fw-bold">ایجاد برنامه</div>
+                                <small class="text-light-50">زمان‌بندی کار جدید</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/sales/add" class="btn btn-info w-100 p-3 d-flex align-items-center">
+                            <i class="bi bi-cart-plus fs-4 me-3"></i>
+                            <div class="text-start">
+                                <div class="fw-bold">ثبت فروش</div>
+                                <small class="text-light-50">افزودن تراکنش جدید</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="/products/add" class="btn btn-warning w-100 p-3 d-flex align-items-center">
+                            <i class="bi bi-box-seam-fill fs-4 me-3"></i>
+                            <div class="text-start">
+                                <div class="fw-bold">افزودن محصول</div>
+                                <small class="text-light-50">ثبت محصول جدید</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-text me-2"></i>گزارش‌های سریع</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="/reports/total-sales" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-cash me-2 text-success"></i>
+                            <span>گزارش کل فروش</span>
+                        </div>
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="/reports/sales-by-customer" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-people me-2 text-primary"></i>
+                            <span>فروش به تفکیک مشتری</span>
+                        </div>
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="/reports/sales-by-item" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-box me-2 text-warning"></i>
+                            <span>فروش به تفکیک محصول</span>
+                        </div>
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a href="/reports/trend-analysis" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-graph-up-arrow me-2 text-info"></i>
+                            <span>تحلیل روند فروش</span>
+                        </div>
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .border-right-primary {
+        border-right: 4px solid var(--primary-color) !important;
+    }
+    .border-right-success {
+        border-right: 4px solid #10b981 !important;
+    }
+    .border-right-info {
+        border-right: 4px solid #0ea5e9 !important;
+    }
+    .border-right-warning {
+        border-right: 4px solid #f59e0b !important;
+    }
+    .text-success {
+        color: #10b981 !important;
+    }
+    .text-info {
+        color: #0ea5e9 !important;
+    }
+    .text-warning {
+        color: #f59e0b !important;
+    }
+    .text-danger {
+        color: #ef4444 !important;
+    }
+    .btn-success {
+        background-color: #10b981;
+        border-color: #10b981;
+    }
+    .btn-info {
+        background-color: #0ea5e9;
+        border-color: #0ea5e9;
+        color: white;
+    }
+    .stretched-link::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+    }
+    .list-group-item {
+        background-color: var(--bg-card);
+        border-color: var(--border-color);
+        color: var(--text-light);
+        padding: 1rem;
+        transition: all 0.2s;
+    }
+    .list-group-item:hover {
+        background-color: rgba(99, 102, 241, 0.1);
+        color: var(--primary-color);
+    }
+    .list-group-item-action:focus, .list-group-item-action:hover {
+        background-color: rgba(99, 102, 241, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Configure Chart.js defaults for dark mode
+        Chart.defaults.color = '#9ca3af';
+        Chart.defaults.borderColor = '#374151';
+        
+        // Initialize charts with data from backend
+        const chartData = {{ chart_data|tojson }};
+        
+        const salesChartCtx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(salesChartCtx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'فروش (تومان)',
+                    data: chartData.sales_data,
+                    borderColor: '#6366f1',
+                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#374151'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString() + ' تومان';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#374151'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Create distribution pie chart with real data
+        const distributionChartCtx = document.getElementById('distributionChart').getContext('2d');
+        const distributionChart = new Chart(distributionChartCtx, {
+            type: 'pie',
+            data: {
+                labels: chartData.distribution.labels,
+                datasets: [{
+                    data: chartData.distribution.data,
+                    backgroundColor: ['#6366f1', '#10b981', '#f59e0b']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let value = context.raw;
+                                return value.toLocaleString() + ' تومان';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Toggle between weekly and monthly data
+        document.getElementById('weekly-toggle').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('monthly-toggle').classList.remove('active');
+            
+            // Fetch weekly data via AJAX
+            fetch('/?period=weekly', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                salesChart.data.labels = data.labels;
+                salesChart.data.datasets[0].data = data.sales_data;
+                salesChart.update();
+            });
+        });
+        
+        document.getElementById('monthly-toggle').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('weekly-toggle').classList.remove('active');
+            
+            // Fetch monthly data via AJAX
+            fetch('/?period=monthly', {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                salesChart.data.labels = data.labels;
+                salesChart.data.datasets[0].data = data.sales_data;
+                salesChart.update();
+            });
+        });
+    });
+</script>
+{% endblock %} 

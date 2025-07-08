@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}افزودن مشتری{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                افزودن مشتری جدید
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">نام *</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="نام کامل مشتری" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">تلفن *</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="شماره تماس" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">ایمیل</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="آدرس ایمیل">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="address" class="form-label">آدرس</label>
+                        <textarea class="form-control" id="address" name="address" rows="2" placeholder="آدرس کامل"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="extra_info" class="form-label">اطلاعات تکمیلی</label>
+                        <textarea class="form-control" id="extra_info" name="extra_info" rows="3" placeholder="هر گونه اطلاعات اضافی"></textarea>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <a href="/customers" class="btn btn-secondary me-2">انصراف</a>
+                        <button type="submit" class="btn btn-primary">ثبت مشتری</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
